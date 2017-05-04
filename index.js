@@ -19,12 +19,6 @@ bot.on('message', message => {
 
   if (command === "ping") {
     message.channel.sendMessage('Pong!');
-    let check = isReachable('google.com:80');
-    if (check == true) {
-      console.log('true');
-    } else {
-      console.log('false');
-    }
   } else
     if (command === 'avatar') {
       message.reply(message.author.avatarURL);
