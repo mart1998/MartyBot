@@ -19,16 +19,38 @@ bot.on('message', message => {
 
   if (command === "ping") {
     message.channel.sendMessage('Pong!');
-    let isAan = false;
-    isReachable('google.com:80').then(reachable => {
-      isAan = true;
+    let isAan = ["BungeeCord","Lobby 1","Skyblock","Skywars","Factions","Eggwars","Adventure Escape","Arcade","Verstoppertje","Minetopia"];
+    isReachable('play.martycraft.net:25566').then(reachable => {
+      isAan[0] = true;
       //=> true
     });
-    if(isAan){
+	isReachable('play.martycraft.net:25567').then(reachable => {
+      isAan[1] = true;
+      //=> true
+    });
+	isReachable('play.martycraft.net:25568').then(reachable => {
+      isAan[2] = true;
+      //=> true
+    });
+	isReachable('play.martycraft.net:25569').then(reachable => {
+      isAan[3] = true;
+      //=> true
+    });
+	isReachable('play.martycraft.net:25570').then(reachable => {
+      isAan[4] = true;
+      //=> true
+    });
+	isReachable('play.martycraft.net:25571').then(reachable => {
+      isAan[5] = true;
+      //=> true
+    });
+	for (i = 0; i < 6; i++) {
+	if(isAan[i]){
       message.channel.sendMessage('server online!');
     } else {
       message.channel.sendMessage('server offline!');
     }
+	}
   } else
     if (command === 'avatar') {
       message.reply(message.author.avatarURL);
