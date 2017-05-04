@@ -19,6 +19,16 @@ bot.on('message', message => {
 
   if (command === "ping") {
     message.channel.sendMessage('Pong!');
+    let isAan = false;
+    isReachable('google.com:80').then(reachable => {
+      isAan = true;
+      //=> true
+    });
+    if(isAan){
+      message.channel.sendMessage('server online!');
+    } else {
+      message.channel.sendMessage('server offline!');
+    }
   } else
     if (command === 'avatar') {
       message.reply(message.author.avatarURL);
