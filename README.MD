@@ -1,1 +1,3 @@
-sdbefew
+Martycrafts Discord bot
+
+
