@@ -1,8 +1,6 @@
 const Discord = require("discord.js");
 const config = require("./package.json");
-const isReachable = require('is-reachable');
-var net = require('net');
-var Promise = require('bluebird');;
+const connection = require("./Connection.js");
 const bot = new Discord.Client();
 const prefix = config.prefix;
 
@@ -20,12 +18,10 @@ bot.on('message', message => {
   console.log(message.author.username + ': ' + command);
 
   if (command === "ping") {
-    message.channel.sendMessage('Pong!');
-    checkConnection("play.martycraft.net", 25566, 5000).then(function () {
-      message.channel.sendMessage("online!");
-    }, function (err) {
-      console.log(err);
-    })
+    //message.channel.sendMessage('Pong!');
+    let Names = ["BungeeCord", "Lobby 1", "Skyblock", "Skywars", "Factions", "Eggwars", "Adventure Escape", "Arcade", "Verstoppertje", "Minetopia"];
+    let Ports = [25565, 25566, 25567, 25568, 25569, 25570, 25571, 25572, 25573, 25574, 25575, 25576, 25577, 25578, 25579, 25580, 25581, 25582, 25583, 25584];
+    connection.checkStatus(Ports);
   } else
     if (command === 'avatar') {
       message.reply(message.author.avatarURL);
@@ -33,23 +29,4 @@ bot.on('message', message => {
 });
 
 bot.login(config.token);
-
-function checkConnection(host, port, timeout) {
-  return new Promise(function (resolve, reject) {
-    timeout = timeout || 10000;     // default of 10 seconds
-    var timer = setTimeout(function () {
-      reject("timeout");
-      socket.end();
-    }, timeout);
-    var socket = net.createConnection(port, host, function () {
-      clearTimeout(timer);
-      resolve();
-      socket.end();
-    });
-    socket.on('error', function (err) {
-      clearTimeout(timer);
-      reject(err);
-    });
-  });
-}
 
