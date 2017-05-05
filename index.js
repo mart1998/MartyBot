@@ -1,6 +1,8 @@
 const Discord = require("discord.js");
 const config = require("./package.json");
 const isReachable = require('is-reachable');
+var net = require('net');
+var Promise = require('bluebird');;
 const bot = new Discord.Client();
 const prefix = config.prefix;
 
@@ -19,39 +21,11 @@ bot.on('message', message => {
 
   if (command === "ping") {
     message.channel.sendMessage('Pong!');
-    let Namen = ["BungeeCord", "Lobby 1", "Skyblock", "Skywars", "Factions", "Eggwars", "Adventure Escape", "Arcade", "Verstoppertje", "Minetopia"];
-    let isAan = [false, false, false, false, false, false, false, false, false, false];
-    isReachable('play.martycraft.net:25566').then(reachable => {
-      isAan[0] = true;
-      //=> true
-    });
-    isReachable('play.martycraft.net:25567').then(reachable => {
-      isAan[1] = true;
-      //=> true
-    });
-    isReachable('play.martycraft.net:25568').then(reachable => {
-      isAan[2] = true;
-      //=> true
-    });
-    isReachable('play.martycraft.net:25569').then(reachable => {
-      isAan[3] = true;
-      //=> true
-    });
-    isReachable('play.martycraft.net:25570').then(reachable => {
-      isAan[4] = true;
-      //=> true
-    });
-    isReachable('play.martycraft.net:25571').then(reachable => {
-      isAan[5] = true;
-      //=> true
-    });
-    for (i = 0; i < 5; i++) {
-      if (isAan[i]) {
-        message.channel.sendMessage(Namen[i] + 'is online!');
-      } else {
-        message.channel.sendMessage(Namen[i] + 'is offline!');
-      }
-    }
+    checkConnection("play.martycraft.net", 25566, 5000).then(function () {
+      message.channel.sendMessage("online!");
+    }, function (err) {
+      console.log(err);
+    })
   } else
     if (command === 'avatar') {
       message.reply(message.author.avatarURL);
@@ -59,3 +33,23 @@ bot.on('message', message => {
 });
 
 bot.login(config.token);
+
+function checkConnection(host, port, timeout) {
+  return new Promise(function (resolve, reject) {
+    timeout = timeout || 10000;     // default of 10 seconds
+    var timer = setTimeout(function () {
+      reject("timeout");
+      socket.end();
+    }, timeout);
+    var socket = net.createConnection(port, host, function () {
+      clearTimeout(timer);
+      resolve();
+      socket.end();
+    });
+    socket.on('error', function (err) {
+      clearTimeout(timer);
+      reject(err);
+    });
+  });
+}
+
