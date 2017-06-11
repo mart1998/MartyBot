@@ -4,6 +4,8 @@ const connection = require("./Connection.js");
 const bot = new Discord.Client();
 const prefix = config.prefix;
 
+var Names = ["bungeecord", "lobby", "skyblock", "skywars", "factions", "eggwars", "adventureescape", "arcade", "verstoppertje", "minetopia"];
+
 bot.on('ready', () => {
   console.log(`Logged in as ${bot.user.username}!`);
 });
@@ -18,11 +20,19 @@ bot.on('message', message => {
   console.log(message.author.username + ': ' + command);
 
   if (command === "ping") {
-    //message.channel.sendMessage('Pong!');
-    let Names = ["BungeeCord", "Lobby 1", "Skyblock", "Skywars", "Factions", "Eggwars", "Adventure Escape", "Arcade", "Verstoppertje", "Minetopia"];
-    let Ports = [25565, 25566, 25567, 25568, 25569, 25570, 25571, 25572, 25573, 25574, 25575, 25576, 25577, 25578, 25579, 25580, 25581, 25582, 25583, 25584];
-    connection.checkStatus(Ports);
+    if (args == "") {
+      message.channel.sendMessage('```md\nGeef een (correcte) servernaam mee die gecontroleerd moet worden!\nJe kan uit de volgende servers kiezen:\n[1.](BungeeCord)\n[2.](Lobby)\n[3.](Skyblock)\n[4.](Skywars)\n[5.](Factions)\n[6.](Eggwars)\n[7.](AdventureEscape)\n[8.](Arcade)\n[9.](Verstoppertje)\n[10.](Minetopia)\nBijvoorbeeld: &ping Skyblock\n```');
+    } else {
+      let lowargs = args[0].toLowerCase();
+      if ((Names.indexOf(lowargs) == -1)) {
+        message.channel.sendMessage('```md\nGeef een (correcte) servernaam mee die gecontroleerd moet worden!\nJe kan uit de volgende servers kiezen:\n[1.](BungeeCord)\n[2.](Lobby)\n[3.](Skyblock)\n[4.](Skywars)\n[5.](Factions)\n[6.](Eggwars)\n[7.](AdventureEscape)\n[8.](Arcade)\n[9.](Verstoppertje)\n[10.](Minetopia)\nBijvoorbeeld: &ping Skyblock\n```');
+      } else {
+        connection.checkStatus(message, lowargs);
+      }
+    }
+
   } else
+
     if (command === 'avatar') {
       message.reply(message.author.avatarURL);
     }
