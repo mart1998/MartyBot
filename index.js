@@ -20,7 +20,7 @@ bot.on('message', message => {
   console.log(message.author.username + ': ' + command);
 
   if (command === "ping") {
-    if (args == "") {s
+    if (args == "") {
       message.channel.sendMessage('```md\nGeef een (correcte) servernaam mee die gecontroleerd moet worden!\nJe kan uit de volgende servers kiezen:\n[1.](BungeeCord)\n[2.](Lobby)\n[3.](Skyblock)\n[4.](Skywars)\n[5.](Factions)\n[6.](Eggwars)\n[7.](AdventureEscape)\n[8.](Arcade)\n[9.](Verstoppertje)\n[10.](Minetopia)\nBijvoorbeeld: &ping Skyblock\n```');
     } else {
       let lowargs = args[0].toLowerCase();
